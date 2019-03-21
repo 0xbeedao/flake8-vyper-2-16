@@ -2,7 +2,7 @@ from flake8.formatting.default import Default
 
 __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 class VyperFilterPlugin(Default):
