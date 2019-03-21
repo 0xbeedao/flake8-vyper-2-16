@@ -2,6 +2,10 @@
 
 Flake8 vyper plugin.  This plugin is experimental, so, beware.
 
+## Install
+
+    pip install flake8-vyper
+
 ## VyperFilterPlugin
 
 This plugin filters out false-positives for expected Vyper globals and types.
