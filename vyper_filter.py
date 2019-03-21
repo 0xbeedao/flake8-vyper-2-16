@@ -44,6 +44,12 @@ class VyperFilterPlugin(Default):
     def _contains_global(self, error):
         return any([m in error.text for m in ['self', 'msg']])
 
+    def handle(self, error):
+        line = self.format(error)
+        if line:
+            source = self.show_source(error)
+            self.write(line, source)
+
     def format(self, error):
         if error.filename.endswith('.vy'):
             if error.code == 'F821':
