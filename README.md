@@ -2,6 +2,8 @@
 
 Flake8 vyper plugin.  This plugin is experimental, so, beware.
 
+**NOTE**: This plugin is not really usable yet for automation.  Any supressed errors will still cause `flake8` to return an exit code greater than zero.
+
 ## Install
 
     pip install flake8-vyper
