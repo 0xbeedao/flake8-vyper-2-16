@@ -4,11 +4,17 @@ requires = [
     "flake8 > 3.0.0",
 ]
 
+long_description = ''
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setuptools.setup(
     name="flake8_vyper",
     license="MIT",
     version="0.1.0",
     description="Plugin for flake8 to support Vyper",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Mike Shultz",
     author_email="mike@mikeshultz.com",
     url="https://gitlab.com/mikeshultz/flake8-vyper",
