@@ -11,6 +11,7 @@ class VyperFilterPlugin(Default):
     version = __version__
 
     vyper_types = None
+    vyper_globals = ['self', 'msg', 'sha3', 'concat', 'slice']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,7 +20,7 @@ class VyperFilterPlugin(Default):
     def _assemble_vyper_types(self):
         bit_lengths = ['256', '128', '64', '32', '16', '8', '4', '2', '1']
         types_with_length = ['bytes', 'uint', 'int']
-        unique_types = ['address', 'string']
+        unique_types = ['address', 'string', 'decimal', 'wei_value', 'timestamp', 'timedelta']
         self.vyper_types = ['{}{}'.format(t, l) for t in types_with_length for l in bit_lengths]
         self.vyper_types += unique_types
 
@@ -42,7 +43,7 @@ class VyperFilterPlugin(Default):
         return any([m in error.text for m in ['public', 'private']])
 
     def _contains_global(self, error):
-        return any([m in error.text for m in ['self', 'msg']])
+        return any([m in error.text for m in self.vyper_globals])
 
     def handle(self, error):
         line = self.format(error)
