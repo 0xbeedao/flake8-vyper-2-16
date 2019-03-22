@@ -6,19 +6,30 @@ from flake8.main import application, options
 from flake8.processor import PyCF_ONLY_AST, FileProcessor
 from flake8.options import manager
 
+from vyper.functions.functions import dispatch_table, stmt_dispatch_table
+from vyper.utils import (
+    base_types,
+    valid_global_keywords,
+    reserved_words,
+    function_whitelist,
+    valid_lll_macros,
+)
 from vyper.parser.pre_parser import pre_parse
 
 __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
 __version__ = '0.1.9'
 
-BIT_LENGTHS = ['256', '128', '64', '32', '16', '8', '4', '2', '1']
-TYPES_WITH_LENGTHS = ['bytes', 'uint', 'int']
-TYPES_WITHOUT = ['address', 'string', 'decimal', 'wei_value', 'timestamp', 'timedelta']
-OTHER_BUILTINS = ['self', 'msg', 'constant', 'modifying', 'private', 'public']
-VYPER_BUILTINS = [
-    '{}{}'.format(t, l) for l in BIT_LENGTHS for t in TYPES_WITH_LENGTHS
-] + TYPES_WITHOUT + OTHER_BUILTINS
+VYPER_BUILTINS = set(dispatch_table.keys())
+VYPER_BUILTINS.update(stmt_dispatch_table.keys())
+VYPER_BUILTINS.update(base_types)
+VYPER_BUILTINS.update(valid_global_keywords)
+VYPER_BUILTINS.update(reserved_words)
+VYPER_BUILTINS.update(function_whitelist)
+VYPER_BUILTINS.update(valid_lll_macros)
+# Missing from vyper internals?
+# https://github.com/ethereum/vyper/issues/1364
+VYPER_BUILTINS.update({'msg'})
 
 
 def find(val, it):
