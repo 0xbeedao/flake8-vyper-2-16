@@ -9,7 +9,7 @@ from vyper.parser.pre_parser import pre_parse
 
 __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 VYPER_BUILTINS = [
     'address', 'bytes1', 'bytes128', 'bytes16', 'bytes2', 'bytes256', 'bytes32', 'bytes4',
