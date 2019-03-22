@@ -18,7 +18,7 @@ from vyper.parser.pre_parser import pre_parse
 
 __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
-__version__ = '0.1.9'
+__version__ = '0.1.10'
 
 VYPER_BUILTINS = set(dispatch_table.keys())
 VYPER_BUILTINS.update(stmt_dispatch_table.keys())
