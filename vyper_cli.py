@@ -74,5 +74,4 @@ def main(argv=None):
     patch_processor(FileProcessor)
     app = application.Application()
     app.run(add_vyper_filename_to_argv(add_vyper_builtins_to_argv(argv)))
-    print(app.result_count)
     app.exit()
