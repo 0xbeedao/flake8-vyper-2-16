@@ -55,7 +55,10 @@ def add_vyper_builtins_to_argv(argv):
     argv = (argv if argv is not None else sys.argv)[:]
     if '--builtins' in argv:
         idx = find('--builtins', argv)
-        argv[idx+1] = argv[idx+1] + ',' + ','.join(VYPER_BUILTINS)
+        if idx > -1 and '=' in argv[idx]:
+            parts = argv[idx].split('=')
+            values = parts[1].split(',')
+            argv = '{}={}'.format(parts[0], ','.join(list(values + VYPER_BUILTINS)))
     else:
         argv.append('--builtins=' + ','.join(VYPER_BUILTINS))
     return argv
