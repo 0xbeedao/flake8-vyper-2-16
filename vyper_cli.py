@@ -2,8 +2,9 @@
 import sys
 from typing import List, Optional
 
-from flake8.main import application
+from flake8.main import application, options
 from flake8.processor import PyCF_ONLY_AST, FileProcessor
+from flake8.options import manager
 
 from vyper.parser.pre_parser import pre_parse
 
@@ -40,6 +41,15 @@ def patch_processor(processor):
     processor.build_ast = build_ast
 
 
+def patch_app_option_manager(app):
+    """ Patch Application an option_manager with a different name (and config) """
+    app.option_manager = manager.OptionManager(
+        prog="flake8-vyper",
+        version=__version__,
+    )
+    options.register_default_options(app.option_manager)
+
+
 def add_vyper_builtins_to_argv(argv):
     """ Inject --builtins with the vyper builtins into argv """
     argv = (argv if argv is not None else sys.argv)[:]
@@ -53,10 +63,13 @@ def add_vyper_builtins_to_argv(argv):
 
 def add_vyper_filename_to_argv(argv):
     """ Inject --builtins with the vyper builtins into argv """
-    argv = (argv if argv is not None else sys.argv)[:]
     if '--filename' not in argv:
         argv.append('--filename=*.vy')
     return argv
+
+
+def or_sys_argv(argv):
+    return (argv if argv is not None else sys.argv[1:])
 
 
 def main(argv=None):
@@ -71,5 +84,6 @@ def main(argv=None):
     """
     patch_processor(FileProcessor)
     app = application.Application()
-    app.run(add_vyper_filename_to_argv(add_vyper_builtins_to_argv(argv))[1:])
+    patch_app_option_manager(app)
+    app.run(add_vyper_builtins_to_argv(or_sys_argv(argv)))
     app.exit()
