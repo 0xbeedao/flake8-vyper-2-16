@@ -10,7 +10,7 @@ from vyper.parser.pre_parser import pre_parse
 
 __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 BIT_LENGTHS = ['256', '128', '64', '32', '16', '8', '4', '2', '1']
 TYPES_WITH_LENGTHS = ['bytes', 'uint', 'int']
