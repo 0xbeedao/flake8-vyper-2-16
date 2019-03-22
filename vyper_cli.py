@@ -52,6 +52,15 @@ def add_vyper_builtins_to_argv(argv):
     return argv
 
 
+def add_vyper_filename_to_argv(argv):
+    """ Inject --builtins with the vyper builtins into argv """
+    argv = (argv if argv is not None else sys.argv)[:]
+    if '--filename' not in argv:
+        argv.append('--filename')
+        argv.append('*.vy')
+    return argv
+
+
 def main(argv=None):
     # type: (Optional[List[str]]) -> None
     """Execute the main bit of the application.
@@ -64,6 +73,6 @@ def main(argv=None):
     """
     patch_processor(FileProcessor)
     app = application.Application()
-    app.run(add_vyper_builtins_to_argv(argv))
+    app.run(add_vyper_filename_to_argv(add_vyper_builtins_to_argv(argv)))
     print(app.result_count)
     app.exit()
