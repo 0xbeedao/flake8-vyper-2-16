@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="flake8_vyper",
     license="MIT",
-    version="0.1.6",
+    version="0.1.7",
     description="Plugin for flake8 to support Vyper",
     long_description=long_description,
     long_description_content_type="text/markdown",
