@@ -12,13 +12,13 @@ __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
 __version__ = '0.1.8'
 
+BIT_LENGTHS = ['256', '128', '64', '32', '16', '8', '4', '2', '1']
+TYPES_WITH_LENGTHS = ['bytes', 'uint', 'int']
+TYPES_WITHOUT = ['address', 'string', 'decimal', 'wei_value', 'timestamp', 'timedelta']
+OTHER_BUILTINS = ['self', 'msg', 'constant', 'modifying', 'private', 'public']
 VYPER_BUILTINS = [
-    'address', 'bytes1', 'bytes128', 'bytes16', 'bytes2', 'bytes256', 'bytes32', 'bytes4',
-    'bytes64', 'bytes8', 'constant', 'decimal', 'int1', 'int128', 'int16', 'int2', 'int256',
-    'int32', 'int4', 'int64', 'int8', 'modifying', 'msg', 'private', 'public', 'self', 'string',
-    'timedelta', 'timestamp', 'uint1', 'uint128', 'uint16', 'uint2', 'uint256', 'uint32', 'uint4',
-    'uint64', 'uint8', 'wei_value'
-]
+    '{}{}'.format(t, l) for l in BIT_LENGTHS for t in TYPES_WITH_LENGTHS
+] + TYPES_WITHOUT + OTHER_BUILTINS
 
 
 def find(val, it):
