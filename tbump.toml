@@ -18,6 +18,7 @@ tag_template = "v{new_version}"
 
 [[file]]
 src = "setup.py"
+search = 'version="{current_version}"'
 
 [[file]]
-src = "vyper_filter.py"
+src = "vyper_cli.py"
