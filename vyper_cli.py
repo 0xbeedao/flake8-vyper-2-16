@@ -61,13 +61,6 @@ def add_vyper_builtins_to_argv(argv):
     return argv
 
 
-def add_vyper_filename_to_argv(argv):
-    """ Inject --builtins with the vyper builtins into argv """
-    if '--filename' not in argv:
-        argv.append('--filename=*.vy')
-    return argv
-
-
 def or_sys_argv(argv):
     return (argv if argv is not None else sys.argv[1:])
 
