@@ -47,8 +47,7 @@ def add_vyper_builtins_to_argv(argv):
         idx = find('--builtins', argv)
         argv[idx+1] = argv[idx+1] + ',' + ','.join(VYPER_BUILTINS)
     else:
-        argv.append('--builtins')
-        argv.append(','.join(VYPER_BUILTINS))
+        argv.append('--builtins=' + ','.join(VYPER_BUILTINS))
     return argv
 
 
@@ -56,8 +55,7 @@ def add_vyper_filename_to_argv(argv):
     """ Inject --builtins with the vyper builtins into argv """
     argv = (argv if argv is not None else sys.argv)[:]
     if '--filename' not in argv:
-        argv.append('--filename')
-        argv.append('*.vy')
+        argv.append('--filename=*.vy')
     return argv
 
 
@@ -73,5 +71,5 @@ def main(argv=None):
     """
     patch_processor(FileProcessor)
     app = application.Application()
-    app.run(add_vyper_filename_to_argv(add_vyper_builtins_to_argv(argv)))
+    app.run(add_vyper_filename_to_argv(add_vyper_builtins_to_argv(argv))[1:])
     app.exit()
