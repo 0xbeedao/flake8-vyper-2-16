@@ -23,7 +23,7 @@ setuptools.setup(
     install_requires=requires,
     entry_points={
         "console_scripts": [
-            'flake8-vyper = vyper_cli:main',
+            'flake8-vyper-2-16 = vyper_cli:main',
         ]
     },
     classifiers=[
