@@ -6,31 +6,34 @@ from flake8.main import application, options
 from flake8.processor import PyCF_ONLY_AST, FileProcessor
 from flake8.options import manager
 
-from vyper.functions.functions import dispatch_table, stmt_dispatch_table
+from vyper.builtin_functions.functions import BUILTIN_FUNCTIONS
+from vyper.semantics.namespace import RESERVED_KEYWORDS
 from vyper.utils import (
-    base_types,
-    valid_global_keywords,
-    reserved_words,
-    function_whitelist,
-    valid_lll_macros,
+    BASE_TYPES,
+    FUNCTION_WHITELIST, 
+    VALID_LLL_MACROS
 )
-from vyper.parser.pre_parser import pre_parse
+from vyper.ast.folding import BUILTIN_CONSTANTS
+from vyper.ast.pre_parser import pre_parse
+from vyper.old_codegen.expr import ENVIRONMENT_VARIABLES
 
+# Below is orginal author
+# This code forked by @0xBeeDao (DevBruce)
+# for Yearn, because linting is important.
 __author__ = 'Mike Shultz'
 __email__ = 'mike@mikeshultz.com'
 __version__ = '0.1.10'
 
-VYPER_BUILTINS = set(dispatch_table.keys())
-VYPER_BUILTINS.update(stmt_dispatch_table.keys())
-VYPER_BUILTINS.update(base_types)
-VYPER_BUILTINS.update(valid_global_keywords)
-VYPER_BUILTINS.update(reserved_words)
-VYPER_BUILTINS.update(function_whitelist)
-VYPER_BUILTINS.update(valid_lll_macros)
+VYPER_BUILTINS = set(BUILTIN_FUNCTIONS)
+VYPER_BUILTINS.update(BASE_TYPES)
+VYPER_BUILTINS.update(BUILTIN_CONSTANTS.keys())
+VYPER_BUILTINS.update(ENVIRONMENT_VARIABLES)
+VYPER_BUILTINS.update(RESERVED_KEYWORDS)
+VYPER_BUILTINS.update(FUNCTION_WHITELIST)
+VYPER_BUILTINS.update(VALID_LLL_MACROS)
 # Missing from vyper internals?
 # https://github.com/ethereum/vyper/issues/1364
-VYPER_BUILTINS.update({'msg'})
-
+VYPER_BUILTINS.update({'self', 'String', 'HashMap', 'view', 'Bytes', 'pure'})
 
 def find(val, it):
     """ Find the index of a value in an iterator """
@@ -59,6 +62,18 @@ def patch_app_option_manager(app):
         version=__version__,
     )
     options.register_default_options(app.option_manager)
+    add_option = app.option_manager.add_option
+    add_option(
+        "--output-file",
+        default="flake8.log",
+        help="The output filename (Default: %(default)s)",
+    )
+    add_option(
+        "--verbose",
+        default=False,
+        action="store_true",
+        help="Verbose",
+    )
 
 
 def add_vyper_builtins_to_argv(argv):
@@ -94,3 +109,6 @@ def main(argv=None):
     patch_app_option_manager(app)
     app.run(add_vyper_builtins_to_argv(or_sys_argv(argv)))
     app.exit()
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

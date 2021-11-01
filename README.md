@@ -1,14 +1,24 @@
 # flake8-vyper
 
-Flake8 wrapper to support Vyper.  This is experimental, so, beware.
+Flake8 wrapper to support Vyper.  This is forked from the original project at https://github.com/mikeshultz/flake8-vyper by @0xbeedao for Yearn.
 
 ## Install
 
-    pip install flake8-vyper
+Locally, preferably set up a Virtualenv.
+    cd flake8-vyper-2
+    python -m venv .
+    python setup.py install
+    
 
-## Usage
+    python flake8_vyper.py [options] file1 [file2 ...]
 
-You can run flake8 with this wrapper with the command `flake8-vyper`.
+Pip
+
+    pip install git+https://github.com/0xbeedao/flake8-vyper-2-16
+
+After install
+
+    flake8-python [options] file [file2 ...]
 
 ## Configuration
 

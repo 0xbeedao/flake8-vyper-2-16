@@ -2,7 +2,7 @@ import setuptools
 
 requires = [
     "flake8>=3.0.0",
-    "vyper==0.1.0b9"
+    "vyper==0.2.16"
 ]
 
 long_description = ''
@@ -10,15 +10,15 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="flake8_vyper",
+    name="flake8_vyper_2_16",
     license="MIT",
-    version="0.1.10",
-    description="Plugin for flake8 to support Vyper",
+    version="0.2.0",
+    description="Plugin for flake8 to support Vyper - supporting Vyper 2.16",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Mike Shultz",
-    author_email="mike@mikeshultz.com",
-    url="https://gitlab.com/mikeshultz/flake8-vyper",
+    author="0xbeedao, with most credit given to Mike Shultz",
+    author_email="0xbeedao@protonmail.com",
+    url="https://github.com/yearn/yearn-vaults",
     py_modules=['vyper_cli'],
     install_requires=requires,
     entry_points={
